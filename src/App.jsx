@@ -1,5 +1,7 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 function App() {
-  return <div>Home page</div>;
+  return <main>App page</main>;
 }
 
 export default App;
