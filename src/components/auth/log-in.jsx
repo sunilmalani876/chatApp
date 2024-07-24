@@ -46,7 +46,7 @@ const LogIn = () => {
 
       if (!res.ok) {
         console.log("res", res);
-        handleHTTPError(res.status, res.message);
+        handleHTTPError(res.status, res.statusText);
         return;
       }
 
@@ -68,7 +68,7 @@ const LogIn = () => {
 
   return (
     <div className="w-full min-h-screen flex items-center">
-      <div className="w-full text-white px-3.5 sm:px-0 h-full flex justify-center items-center">
+      <div className="w-full text-white px-3.5 py-2.5 sm:px-0 h-full flex justify-center items-center">
         <div className="w-full max-sm:flex-col max-sm:items-center max-sm:gap-8 border-slate-700 rounded-md border-[1px] shadow-sm shadow-slate-700 px-3 py-5 flex justify-center max-w-2xl bg-slate-950">
           <div className="p-1">
             <img
@@ -103,7 +103,6 @@ const LogIn = () => {
                     required: true,
                   })}
                   id="email"
-                  type="email"
                   className="w-full h-[42px] bg-gray-700 outline-none border-none focus-visible:ring-2 font-bold focus-visible:ring-white focus-visible:ring-opacity-80 rounded-md px-2"
                   placeholder="Email"
                 />

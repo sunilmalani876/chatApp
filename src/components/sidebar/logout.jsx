@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { ExitIcon } from "@radix-ui/react-icons";
 import { handleGenericError, handleHTTPError } from "@/lib/utils";
+import { ExitIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { useAuthContext } from "@/context/useAuthContext";
+import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 const Logout = () => {
   const [loading, setLoading] = useState(false);
+  const { token } = useAuthContext();
+
   const navigate = useNavigate();
   const handleLogout = async () => {
     let url = `${import.meta.env.VITE_BASE_URL}`;
@@ -15,15 +20,14 @@ const Logout = () => {
       const res = await fetch(`${url}/auth/sign-out`, {
         method: "POST",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (!res.ok) {
         // console.log("res", res);
-        handleHTTPError(res.status);
+        handleHTTPError(res.status, res.message);
         return;
       }
 

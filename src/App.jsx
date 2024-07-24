@@ -13,17 +13,12 @@ import { useAuthContext } from "./context/useAuthContext";
 function App() {
   const { token } = useAuthContext();
   return (
-    <div className="absolute top-0 z-[-2] min-h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] flex justify-center items-center">
+    <div className="absolute top-0 z-[-2] min-h-screen w-full bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] flex justify-center items-center">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={<Hero />}
-            // element={token ? <Home /> : <Navigate to={"/login"} />}
-          />
+          <Route path="/" element={<Hero />} />
           <Route
             path="/login"
-            // element={<LogIn />}
             element={token ? <Navigate to="/chat" /> : <LogIn />}
           />
           <Route
@@ -32,10 +27,10 @@ function App() {
             // element={authUser ? <Navigate to="/" /> : <SignUp />}
           >
             <Route path="" element={<NotFound />} />
+            <Route path=":roomId" element={<p>all</p>} />
           </Route>
         </Routes>
       </Router>
-      {/* <Toaster /> */}
     </div>
   );
 }
