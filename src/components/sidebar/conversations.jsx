@@ -1,28 +1,53 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { useFetcher } from "@/hooks/useFetcher";
+import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const Conversations = () => {
+  const { data, error, loading } = useFetcher(
+    `${import.meta.env.VITE_BASE_URL}/users/all`
+  );
+
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        <div
+          className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-yellow-500 border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="py-2 px-2 flex flex-col gap-0.5 overflow-auto custom-scrollbar">
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
+      {data.data.map((user, index) => (
+        <Conversation key={user._id} user={user} />
+      ))}
     </div>
   );
 };
 
 export default Conversations;
 
-const Conversation = () => {
+const Conversation = ({ user }) => {
   return (
     <>
-      <div className="flex gap-2 items-center bg-slate-800 hover:bg-slate-800/70 focus:bg-slate-800/70 rounded p-2 py-1 cursor-pointer">
+      <Link
+        to={`/chat/${user._id}`}
+        key={user._id}
+        className="flex gap-2 items-center bg-slate-800 hover:bg-slate-800/70 focus:bg-slate-800/70 rounded p-2 py-1 cursor-pointer"
+      >
         <div className="avatar online">
           <div className="w-12 rounded-full">
             <img
-              src="https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png"
+              className="object-cover rounded-full"
+              src={`${getRandomAvatars()}`}
               alt="user avatar"
             />
           </div>
@@ -30,13 +55,15 @@ const Conversation = () => {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200">John Doe</p>
-            <span className="text-xl">🎃</span>
+            <p className="font-bold text-[15px] text-gray-200">
+              {user.email.split("@")[0]}
+            </p>
+            <span className="text-xl">{getRandomEmoji()}</span>
           </div>
         </div>
-      </div>
+      </Link>
 
-      <div className="divider my-0 py-0 h-1" />
+      <div className="my-0 py-0 h-1" />
     </>
   );
 };
