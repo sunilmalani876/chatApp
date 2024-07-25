@@ -1,25 +1,31 @@
 import { useAuthContext } from "@/context/useAuthContext";
 import { handleGenericError, handleHTTPError } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export const useFetcher = (url, method) => {
-  const { token } = useAuthContext();
+export const useGetMessage = (roomId) => {
+  // const {roomId} = useParams();
   const [data, setData] = useState(null);
+  const { token } = useAuthContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // const BASE_URL = ``;
+  // console.log(roomId);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const geNewtMessage = async () => {
+      console.log("rom", roomId);
       try {
-        const res = await fetch(url, {
-          method: method ? method : "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/chat/${roomId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) {
           handleHTTPError(res.status, res.statusText);
@@ -30,6 +36,8 @@ export const useFetcher = (url, method) => {
 
         setData(json);
         setLoading(false);
+
+        console.log("getMessage", json);
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -38,8 +46,9 @@ export const useFetcher = (url, method) => {
         setLoading(false);
       }
     };
-    fetchData();
-  }, []);
+
+    geNewtMessage();
+  }, [roomId]);
 
   return { data, loading, error };
 };

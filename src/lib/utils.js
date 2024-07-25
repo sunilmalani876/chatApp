@@ -14,6 +14,9 @@ export const handleHTTPError = (status, message) => {
     case 400:
       toast.error(`${status} | ${message || "Bad request..."}`);
       break;
+    case 401:
+      toast.error(`${status} | ${message || "Invalid Request..."}`);
+      break;
     case 404:
       toast.error(`${status} | ${message || "Not found"}`);
       break;

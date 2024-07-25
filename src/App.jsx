@@ -9,6 +9,7 @@ import Hero from "./pages/home/hero";
 import Chat from "./pages/chat";
 import NotFound from "./pages/404page";
 import { useAuthContext } from "./context/useAuthContext";
+import RightSidebar from "./components/rightsidebar/rightSidebar";
 
 function App() {
   const { token } = useAuthContext();
@@ -27,7 +28,7 @@ function App() {
             // element={authUser ? <Navigate to="/" /> : <SignUp />}
           >
             <Route path="" element={<NotFound />} />
-            <Route path=":roomId" element={<p>all</p>} />
+            <Route path=":roomId" element={<RightSidebar />} />
           </Route>
         </Routes>
       </Router>
