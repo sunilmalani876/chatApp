@@ -1,13 +1,42 @@
 import Cookies from "js-cookie";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  const { roomId } = useParams();
   const [token, setToken] = useState(Cookies.get("accessToken") || null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // if (!user) {
+    const fetCurrentUser = async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL1}/auth/crnt-usr`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const result = await res.json();
+
+      // console.log(result);
+      if (result.success) {
+        setUser(result.data);
+      }
+    };
+
+    fetCurrentUser();
+    // }
+  }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, user, setUser, setToken }}>
       {children}
     </AuthContext.Provider>
   );

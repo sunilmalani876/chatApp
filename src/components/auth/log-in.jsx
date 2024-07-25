@@ -22,7 +22,7 @@ const schema = z.object({
 
 const LogIn = () => {
   const navigate = useNavigate();
-  const { setToken } = useAuthContext();
+  const { setToken, setUser } = useAuthContext();
   const {
     register,
     handleSubmit,
@@ -57,6 +57,7 @@ const LogIn = () => {
       if (result.success) {
         Cookies.set("accessToken", result.data.accessToken);
         setToken(`${result.data.accessToken}`);
+        // setUser(result.data);
         navigate("/chat");
         return toast.success(`${result.message}`);
       }

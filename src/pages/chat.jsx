@@ -11,7 +11,7 @@ const Chat = () => {
       <div className="flex text-white">
         <LeftSideBar />
 
-        <section className="flex min-h-screen flex-1 flex-col pt-1 px-6 pb-6 max-md:pb-14 sm:px-14">
+        <section className="flex relative min-h-screen flex-1 flex-col pt-1 pb-6 max-md:pb-14">
           <Outlet />
         </section>
       </div>

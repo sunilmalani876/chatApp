@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import { useSocketContext } from "@/context/useAuthContext";
 import { useFetcher } from "@/hooks/useFetcher";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 import { Link } from "react-router-dom";
@@ -26,7 +27,7 @@ const Conversations = () => {
 
   return (
     <div className="py-2 px-2 flex flex-col gap-0.5 overflow-auto custom-scrollbar">
-      {data.data.map((user, index) => (
+      {data?.data?.map((user, index) => (
         <Conversation key={user._id} user={user} />
       ))}
     </div>
@@ -36,6 +37,9 @@ const Conversations = () => {
 export default Conversations;
 
 const Conversation = ({ user }) => {
+  const { onlineUser } = useSocketContext();
+  const isOnline = onlineUser.includes(user.userId);
+
   return (
     <>
       <Link
@@ -44,7 +48,10 @@ const Conversation = ({ user }) => {
         className="flex gap-2 items-center bg-slate-800 hover:bg-slate-800/70 focus:bg-slate-800/70 rounded p-2 py-1 cursor-pointer"
       >
         <div className="avatar online">
-          <div className="w-12 rounded-full">
+          <div className="w-12 rounded-full relative">
+            {isOnline && (
+              <div className="bg-green-600 w-[11px] h-[11px] absolute top-1 right-0 rounded-full" />
+            )}
             <img
               className="object-cover rounded-full"
               src={`${getRandomAvatars()}`}

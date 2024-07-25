@@ -3,13 +3,14 @@ import { ExitIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useAuthContext } from "@/context/useAuthContext";
+import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 
-const Logout = () => {
+const Logout = ({ type }) => {
   const [loading, setLoading] = useState(false);
-  const { token } = useAuthContext();
+  const { token, setToken } = useAuthContext();
+  const { socket } = useSocketContext();
 
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -18,7 +19,7 @@ const Logout = () => {
       setLoading(true);
 
       const res = await fetch(`${url}/auth/sign-out`, {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -39,6 +40,10 @@ const Logout = () => {
         Cookies.remove("accessToken");
         navigate("/");
         setLoading(false);
+        setToken(null);
+
+        socket.close();
+
         return toast.success(`${result.message}`);
       }
     } catch (error) {
@@ -62,7 +67,7 @@ const Logout = () => {
         ) : (
           <>
             <ExitIcon className="w-4 h-4" />
-            Log-Out
+            {type !== "logo" && "Log-Out"}
           </>
         )}
       </Button>
