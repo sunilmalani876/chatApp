@@ -1,20 +1,20 @@
 import { useAuthContext } from "@/context/useAuthContext";
 import { handleGenericError, handleHTTPError } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 export const useGetMessage = (roomId) => {
   // const {roomId} = useParams();
   const [data, setData] = useState(null);
   const { token } = useAuthContext();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // console.log(roomId);
 
   useEffect(() => {
     const geNewtMessage = async () => {
-      console.log("rom", roomId);
+      // console.log("roomId", roomId);
+      setLoading(true);
       try {
         const res = await fetch(
           `${import.meta.env.VITE_BASE_URL}/chat/${roomId}`,
@@ -37,7 +37,7 @@ export const useGetMessage = (roomId) => {
         setData(json);
         setLoading(false);
 
-        console.log("getMessage", json);
+        // console.log("getMessage", json);
       } catch (error) {
         setError(error);
         setLoading(false);

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { io } from "socket.io-client";
@@ -14,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      const socket = io("http://localhost:5000", {
+      const socket = io(`${import.meta.env.VITE_SOCKET_URL}`, {
         query: {
           userId: user?._id ? user?._id : "",
         },
@@ -23,9 +25,12 @@ export const SocketContextProvider = ({ children }) => {
       // console.log("sock connecting...", socket);
       setSocket(socket);
 
-      socket.on("all", (msg) => {});
+      socket.on("all", (msg) => {
+        // console.log("all", msg);
+      });
 
       socket.on("onlineUsers", (user) => {
+        console.log("onlineUsers", user);
         setOnlineUser(user);
       });
 

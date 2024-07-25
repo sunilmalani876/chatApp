@@ -3,7 +3,7 @@
 import { useSocketContext } from "@/context/useAuthContext";
 import { useFetcher } from "@/hooks/useFetcher";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Conversations = () => {
   const { data, error, loading } = useFetcher(
@@ -37,15 +37,19 @@ const Conversations = () => {
 export default Conversations;
 
 const Conversation = ({ user }) => {
+  const { roomId } = useParams();
+
   const { onlineUser } = useSocketContext();
-  const isOnline = onlineUser.includes(user.userId);
+  const isOnline = onlineUser.includes(user._id);
 
   return (
     <>
       <Link
         to={`/chat/${user._id}`}
         key={user._id}
-        className="flex gap-2 items-center bg-slate-800 hover:bg-slate-800/70 focus:bg-slate-800/70 rounded p-2 py-1 cursor-pointer"
+        className={`flex gap-2 items-center hover:bg-slate-700 rounded p-2 py-1 cursor-pointer ${
+          roomId === user._id ? "bg-slate-700" : "bg-slate-800/70"
+        }`}
       >
         <div className="avatar online">
           <div className="w-12 rounded-full relative">

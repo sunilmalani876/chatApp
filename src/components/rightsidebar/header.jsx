@@ -1,17 +1,16 @@
 import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
 import { getRandomAvatars } from "@/lib/utils";
-import React from "react";
 import Logout from "../sidebar/logout";
 
 const Header = () => {
   const { user } = useAuthContext();
   const { onlineUser } = useSocketContext();
-  const isOnline = onlineUser?.includes(user?.userId);
+  const isOnline = onlineUser?.includes(user?._id);
 
   //   console.log("header", user);
 
   return (
-    <div className="w-full max-w-xl absolute top-0 rounded-md bg-gray-700 px-2 py-2 flex items-center">
+    <div className="w-full max-w-xl absolute top-1 rounded-md bg-gray-700 px-2 py-2 flex items-center">
       <div className="flex flex-1 justify-between">
         <div className="flex gap-3 items-center">
           <img
