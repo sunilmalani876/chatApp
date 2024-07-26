@@ -41,8 +41,6 @@ const RightSidebar = () => {
           </>
         )}
       </div>
-
-      {/* HEADER AND SEND TEXT PART */}
     </div>
   );
 };
