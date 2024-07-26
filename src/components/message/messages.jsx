@@ -2,16 +2,6 @@ import { useAuthContext } from "@/context/useAuthContext";
 import { extractTime } from "@/lib/utils";
 import React from "react";
 
-// const Messages = () => {
-//   return (
-//     <div>
-//       <Message />
-//     </div>
-//   );
-// };
-
-// export default Messages;
-
 export const Message = ({ message }) => {
   // console.log("message", message);
   const { user } = useAuthContext();
