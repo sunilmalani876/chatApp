@@ -1,23 +1,21 @@
 import { useAuthContext } from "@/context/useAuthContext";
 import { handleGenericError, handleHTTPError } from "@/lib/utils";
+import useConversation from "@/store/useConversation";
 import { useEffect, useState } from "react";
 
-export const useGetMessage = (roomId) => {
-  // const {roomId} = useParams();
-  const [data, setData] = useState(null);
+export const useGetMessage = () => {
+  // const [data, setData] = useState(null);
   const { token } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // console.log(roomId);
+  const { messages, setMessages, selectedConversation } = useConversation();
 
   useEffect(() => {
     const geNewtMessage = async () => {
-      // console.log("roomId", roomId);
       setLoading(true);
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/chat/${roomId}`,
+          `${import.meta.env.VITE_BASE_URL}/chat/${selectedConversation._id}`,
           {
             method: "GET",
             headers: {
@@ -34,10 +32,14 @@ export const useGetMessage = (roomId) => {
 
         const json = await res.json();
 
-        setData(json);
-        setLoading(false);
+        // console.log("get message", json.data);
 
-        // console.log("getMessage", json);
+        if (json.success) {
+          if (json.data.messages) {
+            setMessages([...json.data.messages]);
+          }
+          setLoading(false);
+        }
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -47,8 +49,10 @@ export const useGetMessage = (roomId) => {
       }
     };
 
-    geNewtMessage();
-  }, [roomId]);
+    if (selectedConversation?._id) geNewtMessage();
 
-  return { data, loading, error };
+    // geNewtMessage();
+  }, [selectedConversation?._id, setMessages]);
+
+  return { messages, loading, error };
 };

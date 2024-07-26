@@ -2,11 +2,39 @@ import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import useConversation from "@/store/useConversation";
+import useGetConversations from "@/hooks/useGetConversation";
+import { toast } from "sonner";
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
+
+  const { setSelectedConversation } = useConversation();
+  const { conversations } = useGetConversations();
+  console.log(search);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!search) return toast.error("Search Is empty...");
+    // if (search.length < 6) {
+    //   return toast.message("Search term must be atleast 6 character long...");
+    // }
+
+    console.log(conversations);
+
+    const conversation = conversations?.data?.find((c) =>
+      c.email.split("@")[0].includes(search)
+    );
+
+    console.log(conversation);
+
+    if (conversation) {
+      setSelectedConversation(conversation);
+      setSearch("");
+    } else toast.error("No such user found!");
+  };
   return (
-    <form className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <Input
         type="text"
         placeholder="Search…"

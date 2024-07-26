@@ -7,10 +7,8 @@ const Header = () => {
   const { onlineUser } = useSocketContext();
   const isOnline = onlineUser?.includes(user?._id);
 
-  //   console.log("header", user);
-
   return (
-    <div className="w-full max-w-xl absolute top-1 rounded-md bg-gray-700 px-2 py-2 flex items-center">
+    <div className="w-full max-w-xl fixed top-1 rounded-md bg-gray-700 px-2 py-2 flex items-center">
       <div className="flex flex-1 justify-between">
         <div className="flex gap-3 items-center">
           <img
@@ -18,7 +16,7 @@ const Header = () => {
             width={45}
             src={`${getRandomAvatars()}`}
             alt="user avatar"
-          />{" "}
+          />
           {user && (
             <p className="font-bold text-[13px] text-gray-200">
               {user?.email} <br />{" "}

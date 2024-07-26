@@ -1,28 +1,46 @@
-import { useAuthContext } from "@/context/useAuthContext";
 import { useGetMessage } from "@/hooks/useGetMessage";
-import { useParams } from "react-router-dom";
 import { Message } from "../message/messages";
+import useConversation from "@/store/useConversation";
+import { useEffect, useRef } from "react";
+import useListenMessages from "@/hooks/useListenMessages";
 
 const AllMessage = () => {
-  const { roomId } = useParams();
-  const { user } = useAuthContext();
-  const { data, loading } = useGetMessage(roomId);
+  const { messages, loading } = useGetMessage();
+  const lastMessageRef = useRef();
+  useListenMessages();
+  console.log("messages", messages);
 
-  // const fromMe = data?.data?.messages?.filter(
-  //   (item) => item?.from === user?.userId
-  // );
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages]);
 
-  // console.log("fromMe", fromMe);
-
-  console.log("all message", data?.data?.messages);
   return (
-    <div className="w-full flex flex-col gap-1.5 px-3">
+    <div className="w-full flex flex-col gap-2 px-3">
       {loading ? (
-        <p>Loading...</p>
-      ) : (
-        data?.data?.messages?.map((item, index) => (
-          <Message key={index} message={item} roomId={roomId} />
+        <div className="self-center pt-8">
+          <p className="font-bold text-yellow-400">
+            Wait, Try to fetch Your Chat...
+          </p>
+        </div>
+      ) : messages?.length > 0 ? (
+        messages?.map((item, index) => (
+          <div
+            key={index}
+            ref={lastMessageRef}
+            className="w-full flex flex-col"
+          >
+            <Message message={item} />
+          </div>
         ))
+      ) : (
+        <div className="self-center pt-8">
+          <p className="font-bold text-xl text-yellow-400">No Chat Found...</p>
+          <p className="font-bold text-sm text-center text-yellow-300">
+            Start a new Chat...
+          </p>
+        </div>
       )}
     </div>
   );
