@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
-import { handleGenericError } from "@/lib/utils";
+import { getRandomAvatars, handleGenericError } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import AllMessage from "./allMessage";
@@ -31,7 +31,7 @@ const RightSidebar = () => {
         ) : (
           <>
             <div className="w-full flex justify-center">
-              <Header />
+              <Header avatar={getRandomAvatars()} />
               <AllMessage />
 
               <div className="w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 fixed bottom-0 bg-red-200 py-1 text-white flex justify-center items-center">

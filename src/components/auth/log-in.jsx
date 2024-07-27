@@ -32,7 +32,7 @@ const LogIn = () => {
   });
 
   const createAccount = async (values) => {
-    console.log(values);
+    // console.log(values);
     let url = `${import.meta.env.VITE_BASE_URL}`;
     try {
       const res = await fetch(`${url}/auth/sign-in`, {
@@ -45,14 +45,14 @@ const LogIn = () => {
       });
 
       if (!res.ok) {
-        console.log("res", res);
+        // console.log("res", res);
         handleHTTPError(res.status, res.statusText);
         return;
       }
 
       const result = await res.json();
 
-      console.log(result);
+      // console.log(result);
 
       if (result.success) {
         Cookies.set("accessToken", result.data.accessToken);
@@ -63,7 +63,6 @@ const LogIn = () => {
       }
     } catch (error) {
       handleGenericError(error);
-      console.log(error);
     }
   };
 

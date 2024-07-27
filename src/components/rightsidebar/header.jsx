@@ -13,7 +13,7 @@ const Header = () => {
         <div className="flex gap-3 items-center">
           <img
             className="object-cover rounded-full"
-            width={45}
+            width={40}
             src={`${getRandomAvatars()}`}
             alt="user avatar"
           />

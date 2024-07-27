@@ -2,12 +2,18 @@ import { useGetMessage } from "@/hooks/useGetMessage";
 import useListenMessages from "@/hooks/useListenMessages";
 import { useEffect, useRef } from "react";
 import { Message } from "../message/messages";
+import useListenDelete from "@/hooks/useListenDelete";
+import useUpdateLiatner from "@/hooks/useUpdateListner";
 
 const AllMessage = () => {
   const { messages, loading } = useGetMessage();
   const lastMessageRef = useRef();
+
   useListenMessages();
-  console.log("messages", messages);
+  useListenDelete();
+  useUpdateLiatner();
+
+  // console.log("messages", messages);
 
   useEffect(() => {
     setTimeout(() => {

@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import useConversation from "@/store/useConversation";
 import useGetConversations from "@/hooks/useGetConversation";
+import useConversation from "@/store/useConversation";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
 
   const { setSelectedConversation } = useConversation();
   const { conversations } = useGetConversations();
-  console.log(search);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -20,13 +20,9 @@ const SearchInput = () => {
     //   return toast.message("Search term must be atleast 6 character long...");
     // }
 
-    console.log(conversations);
-
     const conversation = conversations?.data?.find((c) =>
       c.email.split("@")[0].includes(search)
     );
-
-    console.log(conversation);
 
     if (conversation) {
       setSelectedConversation(conversation);

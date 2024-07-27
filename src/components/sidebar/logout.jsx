@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { handleGenericError, handleHTTPError } from "@/lib/utils";
 import { ExitIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -34,7 +35,7 @@ const Logout = ({ type }) => {
 
       const result = await res.json();
 
-      console.log(result);
+      // console.log(result);
 
       if (result.success) {
         Cookies.remove("accessToken");
@@ -48,7 +49,7 @@ const Logout = ({ type }) => {
       }
     } catch (error) {
       handleGenericError(error);
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }
