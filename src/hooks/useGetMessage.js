@@ -4,7 +4,6 @@ import useConversation from "@/store/useConversation";
 import { useEffect, useState } from "react";
 
 export const useGetMessage = () => {
-  // const [data, setData] = useState(null);
   const { token } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -35,8 +34,11 @@ export const useGetMessage = () => {
         // console.log("get message", json.data);
 
         if (json.success) {
-          if (json.data.messages) {
+          if (Array.isArray(json.data.messages)) {
             setMessages([...json.data.messages]);
+          } else {
+            // Handle the empty array case (optional)
+            setMessages([]); // Set messages to an empty array
           }
           setLoading(false);
         }
