@@ -18,18 +18,25 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Hero />} />
+
           <Route
             path="/login"
             element={token ? <Navigate to="/chat" /> : <LogIn />}
           />
-          <Route
-            path="/chat"
-            element={token ? <Chat /> : <Navigate to="/" />}
-            // element={authUser ? <Navigate to="/" /> : <SignUp />}
-          >
+
+          <Route path="/chat" element={token ? <Chat /> : <Navigate to="/" />}>
             <Route path="" element={<RightSidebar />} />
-            {/* <Route path=":roomId" element={<RightSidebar />} /> */}
           </Route>
+
+          <Route
+            path="*"
+            element={
+              <NotFound
+                title="No Page Found"
+                heading="Try going back to the previous page..."
+              />
+            }
+          />
         </Routes>
       </Router>
     </div>

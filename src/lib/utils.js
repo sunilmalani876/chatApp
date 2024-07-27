@@ -22,7 +22,7 @@ export const handleHTTPError = (status, message) => {
       break;
     case 500:
       toast.error(
-        `${status} | ${message || "An internal server error occurred"}`
+        `${status} | ${message || "An internal server error occurred..."}`
       );
       break;
     default:

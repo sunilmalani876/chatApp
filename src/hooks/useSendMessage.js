@@ -24,9 +24,9 @@ export const useSendMessage = () => {
       );
       const data = await res.json();
 
-      console.log("send message", data.data);
+      // console.log("send message", data.data);
       setMessages([...messages, data.data]);
-      console.log("message", messages);
+      // console.log("message", messages);
     } catch (error) {
       toast.error(error.message);
     } finally {
