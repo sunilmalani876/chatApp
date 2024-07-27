@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context/useAuthContext";
 import { extractTime } from "@/lib/utils";
-import React from "react";
 
 export const Message = ({ message }) => {
   // console.log("message", message);

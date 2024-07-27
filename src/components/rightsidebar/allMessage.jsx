@@ -1,8 +1,7 @@
 import { useGetMessage } from "@/hooks/useGetMessage";
-import { Message } from "../message/messages";
-import useConversation from "@/store/useConversation";
-import { useEffect, useRef } from "react";
 import useListenMessages from "@/hooks/useListenMessages";
+import { useEffect, useRef } from "react";
+import { Message } from "../message/messages";
 
 const AllMessage = () => {
   const { messages, loading } = useGetMessage();

@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useSocketContext } from "@/context/useAuthContext";
-import { useFetcher } from "@/hooks/useFetcher";
 import useGetConversations from "@/hooks/useGetConversation";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 import useConversation from "@/store/useConversation";
-import { Link, useParams } from "react-router-dom";
 
 const Conversations = () => {
   const { loading, conversations } = useGetConversations();
