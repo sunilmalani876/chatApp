@@ -5,6 +5,7 @@ import { extractTime } from "@/lib/utils";
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
+import { BsCheck2All } from "react-icons/bs";
 
 import {
   DropdownMenu,
@@ -23,11 +24,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
 import useDeleteMessage from "@/hooks/useDeleteMessage";
 import useUpdateMessage from "@/hooks/useUpdateMessage";
 import { useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
+import useMessageSeen from "@/hooks/useMessageSeen";
 
 export const Message = ({ message }) => {
   const [messageValue, setMessageValue] = useState(message?.message || "");
@@ -37,6 +40,8 @@ export const Message = ({ message }) => {
   const { UpdateMessage, loading: updateMessageLoading } = useUpdateMessage();
 
   const fromMe = message?.senderId === user?._id;
+
+  console.log("message?.isSeen", message?.isSeen);
 
   const handleDeleteMessage = async () => {
     if (message._id) {
@@ -71,7 +76,22 @@ export const Message = ({ message }) => {
               : "self-start rounded-2xl rounded-bl-none bg-gray-600"
           }`}
         >
-          {loading ? "Deleting..." : message.message}
+          {loading ? (
+            "Deleting..."
+          ) : (
+            <p className="flex flex-col">
+              {message.message}
+              {fromMe && (
+                <BsCheck2All
+                  className={`w-4 h-4 ${
+                    message?.isSeen
+                      ? "text-sky-400 stroke-[0.5px]"
+                      : "text-white stroke-[0.5px]"
+                  } ${fromMe ? "self-end" : "self-start"}`}
+                />
+              )}
+            </p>
+          )}
           <span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="focus-visible:ring-0">
@@ -127,8 +147,6 @@ export const Message = ({ message }) => {
             </DialogDescription>
             <Textarea
               className="w-full h-[42px] bg-gray-700 outline-none border-none focus-visible:ring-2 font-bold focus-visible:ring-white focus-visible:ring-opacity-80 rounded-md px-2"
-              // value={messageValue ? messageValue : message?.message}
-              // onChange={(e) => setMessageValue(e.target.value)}
               value={messageValue}
               onChange={(e) => setMessageValue(e.target.value)}
               disabled={updateMessageLoading}

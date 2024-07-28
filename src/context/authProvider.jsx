@@ -1,11 +1,9 @@
 import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const { roomId } = useParams();
   const [token, setToken] = useState(Cookies.get("accessToken") || null);
   const [user, setUser] = useState(null);
 
