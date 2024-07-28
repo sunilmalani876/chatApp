@@ -5,7 +5,7 @@ import useGetConversations from "@/hooks/useGetConversation";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 import useConversation from "@/store/useConversation";
 
-const Conversations = () => {
+const Conversations = ({ setOpen }) => {
   const { loading, conversations } = useGetConversations();
 
   if (loading) {
@@ -27,6 +27,7 @@ const Conversations = () => {
     <div className="py-2 px-2 flex flex-col gap-0.5 overflow-auto custom-scrollbar">
       {conversations?.data?.map((user, index) => (
         <Conversation
+          setOpen={setOpen}
           key={user._id}
           user={user}
           emoji={getRandomEmoji()}
@@ -39,7 +40,7 @@ const Conversations = () => {
 
 export default Conversations;
 
-const Conversation = ({ user, emoji, avatar }) => {
+const Conversation = ({ user, emoji, avatar, setOpen }) => {
   const { onlineUser } = useSocketContext();
   const isOnline = onlineUser.includes(user._id);
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -48,7 +49,10 @@ const Conversation = ({ user, emoji, avatar }) => {
   return (
     <>
       <div
-        onClick={() => setSelectedConversation(user)}
+        onClick={() => {
+          setSelectedConversation(user);
+          setOpen(false);
+        }}
         key={user._id}
         className={`flex gap-2 items-center hover:bg-slate-700 rounded p-2 py-1 cursor-pointer ${
           isSelected ? "bg-slate-700" : "bg-slate-800/70"

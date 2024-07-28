@@ -35,15 +35,11 @@ const useDeleteMessage = () => {
 
       const data = await res.json();
 
-      // console.log("delete message", data.data.message);
-
       const arr = updateMessageById(
         messages,
         data.data.message._id,
         "This message has been deleted"
       );
-
-      // console.log("arr", arr);
 
       if (data.success) {
         if (arr.length > 0) {
@@ -51,8 +47,6 @@ const useDeleteMessage = () => {
           return toast.success("Message deleted successfully");
         }
       }
-
-      // const index = findIndexOfObjectById(messages, id);
 
       // if (data.success) {
       //   const updated = updateMessageAtIndex(
@@ -70,7 +64,6 @@ const useDeleteMessage = () => {
       // }
     } catch (error) {
       handleGenericError(error);
-      // console.log("error", error);
     } finally {
       setLoading(false);
     }
