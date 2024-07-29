@@ -47,9 +47,15 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
   const { onlineUser } = useSocketContext();
   const isOnline = onlineUser.includes(user._id);
   const { user: isBlockUser } = useAuthContext();
-  const { selectedConversation, setSelectedConversation } = useConversation();
+  const { selectedConversation, setSelectedConversation, isTyping } =
+    useConversation();
 
   useListenBlocked();
+
+  console.log("isTyping ", isTyping);
+  // console.log("user._id", user._id);
+
+  const typedUser = isTyping === user._id;
 
   const BlockedByOther = isBlockUser?.isBlockedByUser?.some(
     (blockedUser) => blockedUser?.userId === user?.userId

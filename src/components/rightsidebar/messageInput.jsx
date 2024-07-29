@@ -14,32 +14,28 @@ const MessageInput = () => {
   const { selectedConversation, setIsTyping } = useConversation();
   // const [isTyping, setIsTyping] = useState(false);
 
-  // useEffect(() => {
-  //   socket?.on("typing", (value) => {
-  //     console.log("socket typing hook on ", value);
+  useEffect(() => {
+    socket?.on("typing", (value) => {
+      console.log("socket typing hook on ", value);
 
-  //     setIsTyping(value);
-  //     // setTimeout(() => setIsTyping(() => false), 200);
-  //   });
+      setIsTyping(value);
+      const running = setTimeout(() => setIsTyping(""), 300);
+    });
 
-  //   return () => {
-  //     socket?.off("typing", handleTypingEvent);
-  //   };
-  // }, [setIsTyping]);
+    return () => {
+      socket?.off("typing", handleTypingEvent);
+      clearTimeout(running);
+    };
+  }, [setIsTyping]);
 
-  // const handleChange = () => {
-  //   if (message.current.value) {
-  //     socket.emit("typing", {
-  //       senderId: user?._id,
-  //       reciverId: selectedConversation?._id,
-  //     });
-
-  //     // setIsTyping(true);
-  //   }
-  //   // else {
-  //   //   setIsTyping(false);
-  //   // }
-  // };
+  const handleChange = () => {
+    if (message.current.value) {
+      socket.emit("typing", {
+        senderId: user?._id,
+        reciverId: selectedConversation?._id,
+      });
+    }
+  };
 
   // Handle typing indicator
   // useEffect(() => {
@@ -97,7 +93,7 @@ const MessageInput = () => {
       <Input
         disabled={loading}
         ref={message}
-        // onChange={handleChange} // Emit typing event on change
+        onChange={handleChange} // Emit typing event on change
         placeholder="enter your message..."
         className="w-full h-[42px] bg-gray-700 outline-none border-none placeholder:text-slate-400 focus-visible:ring-2 font-bold focus-visible:ring-white focus-visible:ring-opacity-80 rounded-md px-2"
       />
