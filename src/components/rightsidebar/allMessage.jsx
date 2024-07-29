@@ -5,6 +5,7 @@ import useUpdateLiatner from "@/hooks/useUpdateListner";
 import { useEffect, useRef } from "react";
 import { Message } from "../message/messages";
 import useMessageSeen from "@/hooks/useMessageSeen";
+import useListenBlocked from "@/hooks/useListenBlocked";
 
 const AllMessage = () => {
   const { messages, loading } = useGetMessage();
@@ -15,8 +16,7 @@ const AllMessage = () => {
   useListenMessages();
   useListenDelete();
   useUpdateLiatner();
-
-  console.log("messages", messages);
+  // useListenBlocked();
 
   useEffect(() => {
     setTimeout(() => {

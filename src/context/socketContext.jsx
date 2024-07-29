@@ -12,8 +12,6 @@ export const SocketContextProvider = ({ children }) => {
 
   const { token, user } = useAuthContext();
 
-  //   console.log(user);
-
   useEffect(() => {
     if (token) {
       const socket = io(`${import.meta.env.VITE_SOCKET_URL}`, {
@@ -22,7 +20,6 @@ export const SocketContextProvider = ({ children }) => {
         },
       });
 
-      // console.log("sock connecting...", socket);
       setSocket(socket);
 
       socket.on("all", (msg) => {
@@ -30,7 +27,7 @@ export const SocketContextProvider = ({ children }) => {
       });
 
       socket.on("onlineUsers", (user) => {
-        console.log("onlineUsers", user);
+        // console.log("onlineUsers", user);
         setOnlineUser(user);
       });
 
@@ -42,8 +39,6 @@ export const SocketContextProvider = ({ children }) => {
       }
     }
   }, [token, user]);
-
-  // console.log("socket", socket);
 
   return (
     <SocketContext.Provider value={{ socket, onlineUser }}>
