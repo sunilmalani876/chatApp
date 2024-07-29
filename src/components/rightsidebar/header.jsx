@@ -2,8 +2,23 @@ import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
 import { getRandomAvatars } from "@/lib/utils";
 import Logout from "../sidebar/logout";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { Button } from "../ui/button";
+import SearchInput from "../sidebar/searchInput";
+import Conversations from "../sidebar/conversations";
+import { useState } from "react";
+
 const Header = () => {
   const { user } = useAuthContext();
+  const [open, setOpen] = useState(false);
   const { onlineUser } = useSocketContext();
   const isOnline = onlineUser?.includes(user?._id);
 
@@ -13,7 +28,7 @@ const Header = () => {
         <div className="flex gap-3 items-center">
           <img
             className="object-cover rounded-full"
-            width={45}
+            width={40}
             src={`${getRandomAvatars()}`}
             alt="user avatar"
           />
@@ -28,8 +43,32 @@ const Header = () => {
             </p>
           )}
         </div>
-        <div>
+        <div className="flex items-center gap-1">
           <Logout type={"logo"} />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger>
+              <Button
+                size="icon"
+                className="bg-slate-800 lg:hidden flex justify-center items-center gap-2 hover:bg-slate-800/80"
+              >
+                <HamburgerMenuIcon className="w-4 h-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="bg-slate-900 custom-scrollbar overflow-y-scroll border-gray-800 text-white py-2">
+              <SheetHeader>
+                <SheetTitle>
+                  <SearchInput />
+                </SheetTitle>
+                <SheetDescription className="custom-scrollbar">
+                  <div className="divider w-full h-[0.5px] bg-slate-500 px-3" />
+
+                  <Conversations setOpen={setOpen} />
+
+                  <Logout />
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </div>
