@@ -9,7 +9,6 @@ import useConversation from "@/store/useConversation";
 
 const Conversations = ({ setOpen }) => {
   const { loading, conversations } = useGetConversations();
-  const { selectedConversation } = useConversation();
 
   if (loading) {
     return (
@@ -52,10 +51,9 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
 
   useListenBlocked();
 
-  console.log("isTyping ", isTyping);
-  // console.log("user._id", user._id);
-
   const typedUser = isTyping === user._id;
+
+  console.log("typedUser", typedUser);
 
   const BlockedByOther = isBlockUser?.isBlockedByUser?.some(
     (blockedUser) => blockedUser?.userId === user?.userId
@@ -93,7 +91,13 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
             <p className="font-bold text-[15px] flex flex-col text-gray-200">
               {user.email.split("@")[0]}
               <span className="text-[9px]">
-                {BlockedByOther ? "Blocked" : ""}
+                {typedUser ? (
+                  <span className="text-green-400 text-[10px]">Typing...</span>
+                ) : BlockedByOther ? (
+                  "Blocked"
+                ) : (
+                  ""
+                )}
               </span>
             </p>
 
