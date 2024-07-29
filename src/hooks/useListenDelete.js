@@ -9,8 +9,6 @@ const useListenDelete = () => {
 
   useEffect(() => {
     socket?.on("delMsgs", (newMessage) => {
-      // console.log("newMessage", newMessage.message_id, messages);
-
       const result = updateMessageById(
         messages,
         newMessage?.message_id,

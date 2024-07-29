@@ -24,6 +24,7 @@ export const AuthContextProvider = ({ children }) => {
       const result = await res.json();
 
       // console.log(result);
+
       if (result.success) {
         setUser(result.data);
       }

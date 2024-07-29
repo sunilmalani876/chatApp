@@ -41,7 +41,7 @@ export const Message = ({ message }) => {
 
   const fromMe = message?.senderId === user?._id;
 
-  console.log("message?.isSeen", message?.isSeen);
+  // console.log("message?.isSeen", message?.isSeen);
 
   const handleDeleteMessage = async () => {
     if (message._id) {

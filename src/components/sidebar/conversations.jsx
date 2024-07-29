@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useSocketContext } from "@/context/useAuthContext";
+import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
 import useGetConversations from "@/hooks/useGetConversation";
+import useListenBlocked from "@/hooks/useListenBlocked";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
+
 import useConversation from "@/store/useConversation";
 
 const Conversations = ({ setOpen }) => {
   const { loading, conversations } = useGetConversations();
+  const { selectedConversation } = useConversation();
 
   if (loading) {
     return (
@@ -40,10 +43,18 @@ const Conversations = ({ setOpen }) => {
 
 export default Conversations;
 
-const Conversation = ({ user, emoji, avatar, setOpen }) => {
+const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
   const { onlineUser } = useSocketContext();
   const isOnline = onlineUser.includes(user._id);
+  const { user: isBlockUser } = useAuthContext();
   const { selectedConversation, setSelectedConversation } = useConversation();
+
+  useListenBlocked();
+
+  const BlockedByOther = isBlockUser?.isBlockedByUser?.some(
+    (blockedUser) => blockedUser?.userId === user?.userId
+  );
+
   const isSelected = selectedConversation?._id === user?._id;
 
   return (
@@ -73,9 +84,13 @@ const Conversation = ({ user, emoji, avatar, setOpen }) => {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-[15px] text-gray-200">
+            <p className="font-bold text-[15px] flex flex-col text-gray-200">
               {user.email.split("@")[0]}
+              <span className="text-[9px]">
+                {BlockedByOther ? "Blocked" : ""}
+              </span>
             </p>
+
             <span className="text-xl">{emoji}</span>
           </div>
         </div>
