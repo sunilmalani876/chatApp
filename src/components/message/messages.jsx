@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context/useAuthContext";
-import { extractTime } from "@/lib/utils";
+import { extractTime, getTimestamp } from "@/lib/utils";
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
@@ -134,7 +134,7 @@ export const Message = ({ message }) => {
             fromMe ? "self-end" : "self-start"
           }`}
         >
-          {extractTime(message?.createdAt)}
+          {getTimestamp(message?.createdAt)}
         </p>
         <DialogContent className="bg-slate-900 border-gray-700 text-white">
           <DialogHeader className="space-y-3">

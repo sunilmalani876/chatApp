@@ -17,6 +17,7 @@ const MessageInput = () => {
   useEffect(() => {
     const handleTyping = (value) => {
       if (value) {
+        // console.log("socket", value);
         setIsTyping(value);
         setTimeout(() => setIsTyping(""), 3000);
       }
