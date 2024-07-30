@@ -6,21 +6,26 @@ import useListenBlocked from "@/hooks/useListenBlocked";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 
 import useConversation from "@/store/useConversation";
+import { Skeleton } from "../ui/skeleton";
 
 const Conversations = ({ setOpen }) => {
   const { loading, conversations } = useGetConversations();
 
   if (loading) {
     return (
-      <div className="flex justify-center">
-        <div
-          className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-yellow-500 border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
+      <div className="h-full flex flex-col gap-5  ">
+        {[1, 2, 3, 4, 5, 6].map(() => (
+          <div className="w-full flex flex-col overflow-auto custom-scrollbar">
+            <div className="flex items-center justify-around">
+              <Skeleton className="h-14 w-14 rounded-full bg-gray-700" />
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-3 w-[110px] rounded-full bg-gray-700" />
+                <Skeleton className="h-3 w-[110px] rounded-full bg-gray-700" />
+              </div>
+              <Skeleton className="h-8 w-8 rounded-xl bg-gray-700" />
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -53,7 +58,7 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
 
   const typedUser = isTyping === user?._id;
 
-  // console.log("typedUser", typedUser);
+  // console.log("typedUser", isTyping);
 
   const BlockedByOther = isBlockUser?.isBlockedByUser?.some(
     (blockedUser) => blockedUser?.userId === user?.userId
