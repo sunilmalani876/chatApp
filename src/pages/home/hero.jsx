@@ -42,12 +42,11 @@ const Hero = () => {
         </div>
         <h2 className="text-center flex flex-col items-center text-3xl font-medium text-gray-50 sm:text-6xl">
           Connect Instantly with
-          <span className="animate-text-gradient inline-flex bg-gradient-to-r dark:from-neutral-900 via-slate-500 dark:to-neutral-500 bg-[200%_auto] bg-clip-text leading-tight text-transparent from-neutral-100 dark:via-slate-400 to-neutral-400">
-            Chateo
+          <span className="inline-flex pt-1 animate-background-shine bg-[linear-gradient(110deg,#EFF3F8,45%,#1e293b,55%,#EFF3F8)] bg-[length:260%_100%] bg-clip-text text-6xl text-transparent">
+            CHATEO
           </span>
         </h2>
         <p className="mt-6 px-6 text-center text-lg leading-6 dark:text-gray-600 text-gray-200">
-          {/* Your Ultimate Messaging Solution */}
           ChatWave revolutionizes communication with lightning-fast messaging
           and an intuitive interface. Connect with friends 😎, family, and
           colleagues instantly, making every conversation seamless and enjoyable
