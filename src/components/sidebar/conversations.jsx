@@ -51,9 +51,9 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
 
   useListenBlocked();
 
-  const typedUser = isTyping === user._id;
+  const typedUser = isTyping === user?._id;
 
-  console.log("typedUser", typedUser);
+  // console.log("typedUser", typedUser);
 
   const BlockedByOther = isBlockUser?.isBlockedByUser?.some(
     (blockedUser) => blockedUser?.userId === user?.userId
