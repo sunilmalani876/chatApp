@@ -1,16 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
-import useGetConversations from "@/hooks/useGetConversation";
 import useListenBlocked from "@/hooks/useListenBlocked";
 import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 
 import useConversation from "@/store/useConversation";
 import { Skeleton } from "../ui/skeleton";
 
-const Conversations = ({ setOpen }) => {
-  const { loading, conversations } = useGetConversations();
-
+const Conversations = ({ setOpen, loading, conversations }) => {
   if (loading) {
     return (
       <div className="h-full flex flex-col gap-5  ">
@@ -96,10 +93,10 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
             <p className="font-bold text-[15px] flex flex-col text-gray-200">
               {user.email.split("@")[0]}
               <span className="text-[9px]">
-                {typedUser ? (
-                  <span className="text-green-400 text-[10px]">Typing...</span>
-                ) : BlockedByOther ? (
+                {BlockedByOther ? (
                   "Blocked"
+                ) : typedUser ? (
+                  <span className="text-green-400 text-[10px]">Typing...</span>
                 ) : (
                   ""
                 )}

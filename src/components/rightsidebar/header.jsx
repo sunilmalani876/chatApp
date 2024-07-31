@@ -2,27 +2,17 @@ import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
 import { getRandomAvatars, handleGenericError } from "@/lib/utils";
 import Logout from "../sidebar/logout";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
 import useConversation from "@/store/useConversation";
-import { CircleBackslashIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { CircleBackslashIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { toast } from "sonner";
-import Conversations from "../sidebar/conversations";
-import SearchInput from "../sidebar/searchInput";
 import { Button } from "../ui/button";
+import MobileNavBar from "./mobileNavBar";
 
 const Header = () => {
   const { user, token, setUser } = useAuthContext();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { onlineUser } = useSocketContext();
   const { selectedConversation } = useConversation();
 
@@ -30,7 +20,7 @@ const Header = () => {
 
   const handleBlock = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BASE_URL}/chat/blc-usr/${
           selectedConversation?._id
@@ -58,7 +48,7 @@ const Header = () => {
           };
         });
       } else {
-        setLoading(false);
+        setIsLoading(false);
         toast.error(`${result?.data?.message}`);
       }
 
@@ -66,12 +56,12 @@ const Header = () => {
     } catch (error) {
       handleGenericError(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-xl fixed top-1 rounded-md bg-gray-700 px-2 py-2 flex items-center">
+    <div className="w-full max-w-xl fixed top-0 sm:top-1 sm:rounded-md bg-gray-700 px-2 py-2 flex items-center">
       <div className="flex flex-1 justify-between">
         <div className="flex gap-3 items-center">
           <img
@@ -98,33 +88,12 @@ const Header = () => {
               onClick={handleBlock}
               className="bg-slate-800 flex justify-center items-center gap-2 hover:bg-slate-800/80"
             >
-              {loading ? "Wait..." : <CircleBackslashIcon />}
+              {isLoading ? "Wait..." : <CircleBackslashIcon />}
             </Button>
           )}
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger>
-              <Button
-                size="icon"
-                className="bg-slate-800 lg:hidden flex justify-center items-center gap-2 hover:bg-slate-800/80"
-              >
-                <HamburgerMenuIcon className="w-4 h-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent className="bg-slate-900 custom-scrollbar overflow-y-scroll border-gray-800 text-white py-2">
-              <SheetHeader>
-                <SheetTitle>
-                  <SearchInput />
-                </SheetTitle>
-                <SheetDescription className="custom-scrollbar">
-                  <div className="divider w-full h-[0.5px] bg-slate-500 px-3" />
-
-                  <Conversations setOpen={setOpen} />
-
-                  <Logout />
-                </SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
+          <div className="lg:hidden">
+            <MobileNavBar />
+          </div>
         </div>
       </div>
     </div>

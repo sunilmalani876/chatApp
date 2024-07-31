@@ -1,10 +1,11 @@
-import { useAuthContext } from "@/context/useAuthContext";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { createContext, useEffect, useState } from "react";
+import { useAuthContext } from "./useAuthContext";
+import { handleHTTPError } from "@/lib/utils";
 
-const useGetConversations = () => {
+export const ConversationContext = createContext();
+
+export const ConversationContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  //   const [data, setData] = useState(null);
   const { token } = useAuthContext();
   const [conversations, setConversations] = useState([]);
 
@@ -38,9 +39,14 @@ const useGetConversations = () => {
       }
     };
 
-    getConversations();
-  }, []);
+    if (token) {
+      getConversations();
+    }
+  }, [token]);
 
-  return { loading, conversations };
+  return (
+    <ConversationContext.Provider value={{ conversations, loading }}>
+      {children}
+    </ConversationContext.Provider>
+  );
 };
-export default useGetConversations;

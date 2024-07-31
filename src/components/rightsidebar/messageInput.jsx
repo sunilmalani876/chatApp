@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-const MessageInput = () => {
+const MessageInput = ({ BlockedByOther }) => {
   const message = useRef();
   const { socket } = useSocketContext();
   const { sendMessage, loading } = useSendMessage();
@@ -17,7 +17,6 @@ const MessageInput = () => {
   useEffect(() => {
     const handleTyping = (value) => {
       if (value) {
-        // console.log("socket", value);
         setIsTyping(value);
         setTimeout(() => setIsTyping(""), 3000);
       }
@@ -49,9 +48,9 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="w-full relative flex items-center max-w-xl text-white">
+    <form className="w-full relative flex items-center max-w-xl text-white">
       <Input
-        disabled={loading}
+        disabled={loading ? loading : BlockedByOther}
         ref={message}
         onChange={handleChange}
         placeholder="enter your message..."
@@ -60,7 +59,7 @@ const MessageInput = () => {
 
       <Button
         type="submit"
-        disabled={loading}
+        disabled={loading ? loading : BlockedByOther}
         onClick={handleSubmit}
         className="absolute hover:bg-transparent hover:text-white right-0"
         variant="ghost"
@@ -71,7 +70,7 @@ const MessageInput = () => {
           <PaperPlaneIcon className="w-4 h-4" />
         )}
       </Button>
-    </div>
+    </form>
   );
 };
 

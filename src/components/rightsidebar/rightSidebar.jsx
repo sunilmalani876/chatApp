@@ -25,7 +25,7 @@ const RightSidebar = () => {
 
   return (
     <div className="w-full h-full custom-scrollbar">
-      <div className="w-full h-full break-words py-20 pl-2">
+      <div className="w-full h-full break-words py-20 px-2">
         <div className="w-full flex justify-center">
           <Header avatar={getRandomAvatars()} />
         </div>
@@ -37,8 +37,8 @@ const RightSidebar = () => {
             <div className="w-full flex justify-center">
               {BlockedByOther ? "You Blocked Him" : <AllMessage />}
 
-              <div className="w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 fixed bottom-0 bg-red-200 py-1 text-white flex justify-center items-center">
-                <MessageInput />
+              <div className="w-full bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 fixed bottom-0 bg-red-200 px-1 py-1 text-white flex justify-center items-center">
+                <MessageInput BlockedByOther={BlockedByOther} />
               </div>
             </div>
           </>
