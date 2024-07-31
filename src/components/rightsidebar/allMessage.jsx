@@ -9,6 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 
 const AllMessage = () => {
   const { messages, loading } = useGetMessage();
+
   const lastMessageRef = useRef();
 
   useMessageSeen();
@@ -24,7 +25,7 @@ const AllMessage = () => {
   }, [messages]);
 
   return (
-    <div className="w-full flex flex-col gap-2 px-3">
+    <div className="w-full flex flex-col gap-2">
       {loading ? (
         <div className="flex flex-col pt-3">
           {[1, 2, 3].map(() => (
@@ -67,3 +68,10 @@ const AllMessage = () => {
 };
 
 export default AllMessage;
+
+//      /\
+//     /  \
+//    /    \
+//   /      \
+//  /        \
+// /          \

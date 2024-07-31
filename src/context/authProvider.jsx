@@ -34,6 +34,35 @@ export const AuthContextProvider = ({ children }) => {
     // }
   }, [token]);
 
+  // const getConversations = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/all`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     if (!res.ok) {
+  //       handleHTTPError(res.status, res.statusText);
+  //       return;
+  //     }
+
+  //     const json = await res.json();
+
+  //     if (json.success) {
+  //       setConversations(json);
+  //       setLoading(false);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   return (
     <AuthContext.Provider value={{ token, user, setUser, setToken }}>
       {children}
