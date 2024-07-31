@@ -1,9 +1,5 @@
 import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
-import {
-  getRandomAvatars,
-  handleGenericError,
-  handleHTTPError,
-} from "@/lib/utils";
+import { getRandomAvatars, handleGenericError } from "@/lib/utils";
 import Logout from "../sidebar/logout";
 
 import {
@@ -14,26 +10,27 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { CircleBackslashIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Button } from "../ui/button";
-import SearchInput from "../sidebar/searchInput";
-import Conversations from "../sidebar/conversations";
-import { useState } from "react";
+
 import useConversation from "@/store/useConversation";
+import { CircleBackslashIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 import { toast } from "sonner";
+import Conversations from "../sidebar/conversations";
+import SearchInput from "../sidebar/searchInput";
+import { Button } from "../ui/button";
 
 const Header = () => {
   const { user, token, setUser } = useAuthContext();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { onlineUser } = useSocketContext();
-  const { selectedConversation, setIsBlocked } = useConversation();
+  const { selectedConversation } = useConversation();
 
   const isOnline = onlineUser?.includes(user?._id);
 
-  // console.log("current user", user);
   const handleBlock = async () => {
-    // console.log(selectedConversation?._id);
     try {
+      setLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BASE_URL}/chat/blc-usr/${
           selectedConversation?._id
@@ -60,15 +57,16 @@ const Header = () => {
             ],
           };
         });
-
-        // setIsBlocked()
       } else {
+        setLoading(false);
         toast.error(`${result?.data?.message}`);
       }
 
       console.log(result);
     } catch (error) {
       handleGenericError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +98,7 @@ const Header = () => {
               onClick={handleBlock}
               className="bg-slate-800 flex justify-center items-center gap-2 hover:bg-slate-800/80"
             >
-              <CircleBackslashIcon />
+              {loading ? "Wait..." : <CircleBackslashIcon />}
             </Button>
           )}
           <Sheet open={open} onOpenChange={setOpen}>
