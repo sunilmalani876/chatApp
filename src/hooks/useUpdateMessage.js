@@ -36,10 +36,16 @@ const useUpdateMessage = () => {
 
       const data = await res.json();
 
-      const arr = updateMessageById(messages, id, message);
-
       if (data.success) {
         setOpen(false);
+        const arr = updateMessageById(
+          messages,
+          id,
+          message,
+          data.data.createdAt,
+          data.data.updatedAt
+        );
+
         if (arr.length > 0) {
           setMessages([...arr]);
           return toast.success("Message Updated Successfully");

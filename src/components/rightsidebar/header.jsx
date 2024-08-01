@@ -18,6 +18,12 @@ const Header = () => {
 
   const isOnline = onlineUser?.includes(user?._id);
 
+  const BlockedByOther = user?.isBlockedByUser?.some(
+    (blockedUser) => blockedUser?.userId === selectedConversation?.userId
+  );
+
+  // console.log("BlockedByOther", BlockedByOther);
+
   const handleBlock = async () => {
     try {
       setIsLoading(true);
@@ -83,14 +89,17 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-1">
           <Logout type={"logo"} />
-          {selectedConversation && (
-            <Button
-              onClick={handleBlock}
-              className="bg-slate-800 flex justify-center items-center gap-2 hover:bg-slate-800/80"
-            >
-              {isLoading ? "Wait..." : <CircleBackslashIcon />}
-            </Button>
-          )}
+          {selectedConversation &&
+            (BlockedByOther ? (
+              ""
+            ) : (
+              <Button
+                onClick={handleBlock}
+                className="bg-slate-800 flex justify-center items-center gap-2 hover:bg-slate-800/80"
+              >
+                {isLoading ? "Wait..." : <CircleBackslashIcon />}
+              </Button>
+            ))}
           <div className="lg:hidden">
             <MobileNavBar />
           </div>
