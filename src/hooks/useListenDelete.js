@@ -24,9 +24,11 @@ const useListenDelete = () => {
 
 export default useListenDelete;
 
-export function updateMessageById(array, id, newMessage) {
+export function updateMessageById(array, id, newMessage, createdAt, updatedAt) {
   // console.log("Input array:", array); // Debug: Log the input array
   // console.log("Searching for _id:", id); // Debug: Log the id being searched for
+
+  // console.log(createdAt, updatedAt);
 
   // Find the index of the object with the matching _id
   const index = array.findIndex((obj) => obj._id === id);
@@ -38,9 +40,16 @@ export function updateMessageById(array, id, newMessage) {
     // Clone the array to avoid mutating the original state
     const updatedArray = [...array];
     // Update the message property of the object at the found index
-    updatedArray[index] = { ...updatedArray[index], message: newMessage };
+    updatedArray[index] = {
+      ...updatedArray[index],
+      message: newMessage,
+      ...(createdAt !== undefined && { createdAt }), // Only add createdAt if it's provided
+      ...(updatedAt !== undefined && { updatedAt }), // Only add updatedAt if it's provided
+    };
 
     // console.log("Updated array:", updatedArray); // Debug: Log the updated array
+
+    // Update the object in the array
 
     // Return the updated array
     return updatedArray;

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useAuthContext } from "@/context/useAuthContext";
-import { extractTime, getTimestamp } from "@/lib/utils";
+import { getTimestamp } from "@/lib/utils";
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button } from "../ui/button";
 import { BsCheck2All } from "react-icons/bs";
+import { Button } from "../ui/button";
 
 import {
   DropdownMenu,
@@ -27,10 +27,9 @@ import {
 
 import useDeleteMessage from "@/hooks/useDeleteMessage";
 import useUpdateMessage from "@/hooks/useUpdateMessage";
-import { useEffect, useState } from "react";
-import { Textarea } from "../ui/textarea";
+import { useState } from "react";
 import { toast } from "sonner";
-import useMessageSeen from "@/hooks/useMessageSeen";
+import { Textarea } from "../ui/textarea";
 
 export const Message = ({ message }) => {
   const [messageValue, setMessageValue] = useState(message?.message || "");
@@ -41,7 +40,7 @@ export const Message = ({ message }) => {
 
   const fromMe = message?.senderId === user?._id;
 
-  // console.log("message?.isSeen", message?.isSeen);
+  // console.log("message", message);
 
   const handleDeleteMessage = async () => {
     if (message._id) {
@@ -50,8 +49,8 @@ export const Message = ({ message }) => {
   };
 
   const handleUpdateMessage = async () => {
-    // console.log("messageValue", messageValue);
     if (messageValue === message.message) {
+      setOpen(false);
       return toast.success("Message Updated Successfully");
     }
 
@@ -68,7 +67,7 @@ export const Message = ({ message }) => {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <div
-          className={`bg-gray-600 px-3 flex ${
+          className={`bg-gray-600 px-3 flex break-all ${
             loading ? "text-neutral-200" : "text-white"
           } items-center py-2 w-max max-w-xs ${
             fromMe
@@ -79,7 +78,7 @@ export const Message = ({ message }) => {
           {loading ? (
             "Deleting..."
           ) : (
-            <p className="flex flex-col">
+            <p className="flex flex-col break-all">
               {message.message}
               {fromMe && (
                 <BsCheck2All
@@ -134,7 +133,8 @@ export const Message = ({ message }) => {
             fromMe ? "self-end" : "self-start"
           }`}
         >
-          {getTimestamp(message?.createdAt)}
+          {getTimestamp(message?.createdAt)}{" "}
+          {message?.createdAt !== message?.updatedAt ? "edited" : ""}
         </p>
         <DialogContent className="bg-slate-900 border-gray-700 text-white">
           <DialogHeader className="space-y-3">
