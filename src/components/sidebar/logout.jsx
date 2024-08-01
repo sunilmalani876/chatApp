@@ -35,8 +35,6 @@ const Logout = ({ type }) => {
 
       const result = await res.json();
 
-      // console.log(result);
-
       if (result.success) {
         Cookies.remove("accessToken");
         navigate("/");

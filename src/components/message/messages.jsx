@@ -40,8 +40,6 @@ export const Message = ({ message }) => {
 
   const fromMe = message?.senderId === user?._id;
 
-  // console.log("message", message);
-
   const handleDeleteMessage = async () => {
     if (message._id) {
       await DeleteMessage(message._id);

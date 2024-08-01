@@ -39,7 +39,7 @@ const useUnblocked = () => {
         (ele) => ele?.userRef !== selectedConversation?._id
       );
 
-      console.log("blockedUser", blockedUser);
+      // console.log("blockedUser", blockedUser);
 
       if (result.success) {
         setUser((pre) => {
@@ -49,10 +49,9 @@ const useUnblocked = () => {
           };
         });
       }
-
-      console.log(result);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     } finally {
       setLoading(false);
     }
