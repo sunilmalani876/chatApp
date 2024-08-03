@@ -11,7 +11,7 @@ import MobileNavBar from "./mobileNavBar";
 
 const Header = () => {
   const { user, token, setUser } = useAuthContext();
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { onlineUser } = useSocketContext();
   const { selectedConversation } = useConversation();

@@ -16,7 +16,7 @@ const Hero = () => {
           >
             <span className="relative inline-block overflow-hidden rounded-full p-[1px]">
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#a9a9a9_0%,#0c0c0c_50%,#a9a9a9_100%)] bg-[conic-gradient(from_90deg_at_50%_50%,#171717_0%,#737373_50%,#171717_100%)]"></span>
-              <div className="inline-flex h-full w-full cursor-pointer justify-center rounded-full px-3 py-1 text-xs font-medium leading-5 backdrop-blur-xl bg-black text-slate-200">
+              <div className="inline-flex h-full w-full cursor-pointer justify-center rounded-full px-3 py-1 text-xs font-medium leading-5 backdrop-blur-xl bg-gray-950/90 text-slate-200">
                 Chateo ⚡️
                 <span className="inline-flex items-center pl-2 text-white">
                   Chat Now
@@ -42,8 +42,8 @@ const Hero = () => {
         </div>
         <h2 className="text-center flex flex-col items-center text-3xl font-medium text-gray-50 sm:text-6xl">
           Connect Instantly with
-          <span className="inline-flex pt-1 animate-background-shine bg-[linear-gradient(110deg,#EFF3F8,45%,#1e293b,55%,#EFF3F8)] bg-[length:260%_100%] bg-clip-text text-6xl text-transparent">
-            CHATEO
+          <span className="inline-flex pt-3 animate-background-shine bg-[linear-gradient(110deg,#EFF3F8,45%,#1e293b,55%,#EFF3F8)] bg-[length:260%_100%] underline decoration-dashed underline-offset-8 decoration-slate-600 bg-clip-text text-6xl text-transparent font-acorn">
+            CHATE<span className="text-white">🌀</span>
           </span>
         </h2>
         <p className="mt-6 px-6 text-center text-lg leading-6 dark:text-gray-600 text-gray-200">
