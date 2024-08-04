@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { handleHTTPError } from "@/lib/utils";
+import { toast } from "sonner";
 
 export const ConversationContext = createContext();
 

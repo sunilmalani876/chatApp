@@ -6,13 +6,17 @@ import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 
 import useConversation from "@/store/useConversation";
 import { Skeleton } from "../ui/skeleton";
+import useListenTyping from "@/hooks/useListenTyping";
 
 const Conversations = ({ setOpen, loading, conversations }) => {
   if (loading) {
     return (
       <div className="h-full flex flex-col gap-5  ">
-        {[1, 2, 3, 4, 5, 6].map(() => (
-          <div className="w-full flex flex-col overflow-auto custom-scrollbar">
+        {[1, 2, 3, 4, 5, 6].map((_, index) => (
+          <div
+            key={index}
+            className="w-full flex flex-col overflow-auto custom-scrollbar"
+          >
             <div className="flex items-center justify-around">
               <Skeleton className="h-14 w-14 rounded-full bg-gray-700" />
               <div className="flex flex-col gap-2">
@@ -51,6 +55,7 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
   const { selectedConversation, setSelectedConversation, isTyping } =
     useConversation();
 
+  useListenTyping();
   useListenBlocked();
 
   const typedUser = isTyping === user?._id;
