@@ -58,7 +58,7 @@ const Header = () => {
         toast.error(`${result?.data?.message}`);
       }
 
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       handleGenericError(error);
     } finally {
@@ -95,6 +95,7 @@ const Header = () => {
             ) : (
               <Button
                 onClick={handleBlock}
+                disabled={isLoading}
                 className="bg-slate-800 flex justify-center items-center gap-2 hover:bg-slate-800/80"
               >
                 {isLoading ? "Wait..." : <CircleBackslashIcon />}

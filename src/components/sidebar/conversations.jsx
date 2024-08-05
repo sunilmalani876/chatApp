@@ -11,7 +11,7 @@ import useListenTyping from "@/hooks/useListenTyping";
 const Conversations = ({ setOpen, loading, conversations }) => {
   if (loading) {
     return (
-      <div className="h-full flex flex-col gap-5  ">
+      <div className="h-full flex flex-col gap-5">
         {[1, 2, 3, 4, 5, 6].map((_, index) => (
           <div
             key={index}
@@ -59,8 +59,6 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
   useListenBlocked();
 
   const typedUser = isTyping === user?._id;
-
-  // console.log("typedUser", isTyping);
 
   const BlockedByOther = isBlockUser?.isBlockedByUser?.some(
     (blockedUser) => blockedUser?.userId === user?.userId

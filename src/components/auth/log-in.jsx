@@ -22,7 +22,7 @@ const schema = z.object({
 
 const LogIn = () => {
   const navigate = useNavigate();
-  const { setToken, setUser } = useAuthContext();
+  const { setToken } = useAuthContext();
   const {
     register,
     handleSubmit,
@@ -32,7 +32,6 @@ const LogIn = () => {
   });
 
   const createAccount = async (values) => {
-    // console.log(values);
     let url = `${import.meta.env.VITE_BASE_URL}`;
     try {
       const res = await fetch(`${url}/auth/sign-in`, {
@@ -45,7 +44,6 @@ const LogIn = () => {
       });
 
       if (!res.ok) {
-        // console.log("res", res);
         handleHTTPError(res.status, res.statusText);
         return;
       }
@@ -57,7 +55,6 @@ const LogIn = () => {
       if (result.success) {
         Cookies.set("accessToken", result.data.accessToken);
         setToken(`${result.data.accessToken}`);
-        // setUser(result.data);
         navigate("/chat");
         return toast.success(`${result.message}`);
       }

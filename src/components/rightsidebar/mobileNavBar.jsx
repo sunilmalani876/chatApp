@@ -32,7 +32,11 @@ const MobileNavBar = () => {
         <SheetContent className="bg-slate-900 custom-scrollbar overflow-y-scroll border-gray-800 text-white py-2">
           <SheetHeader>
             <SheetTitle>
-              <SearchInput loading={loading} conversations={conversations} />
+              <SearchInput
+                setOpen={setOpen}
+                loading={loading}
+                conversations={conversations}
+              />
             </SheetTitle>
             <SheetDescription className="custom-scrollbar">
               <div className="divider w-full h-[0.5px] bg-slate-500 px-3" />
