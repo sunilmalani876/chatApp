@@ -13,6 +13,7 @@ import RightSidebar from "./components/rightsidebar/rightSidebar";
 
 function App() {
   const { token } = useAuthContext();
+
   return (
     <div className="absolute top-0 z-[-2] min-h-screen w-full overflow-x-clip bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] flex justify-center items-center">
       <Router>

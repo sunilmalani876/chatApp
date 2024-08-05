@@ -5,11 +5,10 @@ import React, { useState } from "react";
 
 const useUnblocked = () => {
   const [Loading, setLoading] = useState(false);
-  const { selectedConversation, messages, setMessages } = useConversation();
+  const { selectedConversation } = useConversation();
   const { token, setUser, user } = useAuthContext();
 
   const blockUser = async () => {
-    console.log(selectedConversation?._id);
     try {
       setLoading(true);
 
@@ -32,8 +31,6 @@ const useUnblocked = () => {
       }
 
       const result = await res.json();
-
-      console.log("user", user);
 
       const blockedUser = user?.isBlockedByUser?.filter(
         (ele) => ele?.userRef !== selectedConversation?._id

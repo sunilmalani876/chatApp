@@ -24,12 +24,13 @@ const SearchInput = ({ conversations, loading }) => {
       setSearch("");
     } else toast.error("No such user found!");
   };
+
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <Input
         type="text"
         placeholder="Search…"
-        className="rounded-full bg-slate-800 border-none outline-none focus-visible:ring-1 focus-visible:ring-white placeholder:text-slate-300"
+        className="rounded-full text-white bg-slate-800 border-none outline-none focus-visible:ring-1 focus-visible:ring-white placeholder:text-slate-300"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
