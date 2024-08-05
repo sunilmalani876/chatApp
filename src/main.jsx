@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ConversationContextProvider>
       <SocketContextProvider>
         <App />
-        <Toaster position="top-right" />
+        <Toaster position="top-right" richColors toastOptions={{}} />
       </SocketContextProvider>
     </ConversationContextProvider>
   </AuthContextProvider>

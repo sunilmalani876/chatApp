@@ -11,7 +11,6 @@ import MobileNavBar from "./mobileNavBar";
 
 const Header = () => {
   const { user, token, setUser } = useAuthContext();
-  // const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { onlineUser } = useSocketContext();
   const { selectedConversation } = useConversation();
@@ -77,14 +76,16 @@ const Header = () => {
             alt="user avatar"
           />
           {user && (
-            <p className="font-bold text-[13px] text-gray-200">
-              {user?.email} <br />
-              {isOnline && (
-                <span className="text-[11px] text-green-500 font-bold">
-                  Online
-                </span>
-              )}
-            </p>
+            <>
+              <p className="font-bold text-[13px] text-gray-200">
+                {user?.email} <br />
+                {isOnline && (
+                  <span className="text-[11px] text-green-500 font-bold">
+                    Online
+                  </span>
+                )}
+              </p>
+            </>
           )}
         </div>
         <div className="flex items-center gap-1">
