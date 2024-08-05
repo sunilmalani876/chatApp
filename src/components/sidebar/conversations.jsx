@@ -6,6 +6,7 @@ import { getRandomAvatars, getRandomEmoji } from "@/lib/utils";
 
 import useConversation from "@/store/useConversation";
 import { Skeleton } from "../ui/skeleton";
+import useListenTyping from "@/hooks/useListenTyping";
 
 const Conversations = ({ setOpen, loading, conversations }) => {
   if (loading) {
@@ -54,6 +55,7 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
   const { selectedConversation, setSelectedConversation, isTyping } =
     useConversation();
 
+  useListenTyping();
   useListenBlocked();
 
   const typedUser = isTyping === user?._id;

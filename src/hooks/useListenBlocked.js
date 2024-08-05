@@ -1,10 +1,9 @@
 import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
-import useConversation from "@/store/useConversation";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const useListenBlocked = () => {
   const { socket } = useSocketContext();
-  const { user, setUser } = useAuthContext();
+  const { setUser } = useAuthContext();
 
   useEffect(() => {
     // console.log("useListenBlocked Hook");

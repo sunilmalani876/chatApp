@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        acorn: ["Acorn", "sans-serif"],
+      },
       keyframes: {
         "background-shine": {
           from: {

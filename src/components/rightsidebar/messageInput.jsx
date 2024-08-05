@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import { useAuthContext, useSocketContext } from "@/context/useAuthContext";
 import { useSendMessage } from "@/hooks/useSendMessage";
 import useConversation from "@/store/useConversation";
 import { PaperPlaneIcon, UpdateIcon } from "@radix-ui/react-icons";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -12,22 +13,7 @@ const MessageInput = ({ BlockedByOther }) => {
   const { socket } = useSocketContext();
   const { sendMessage, loading } = useSendMessage();
   const { user } = useAuthContext();
-  const { selectedConversation, setIsTyping } = useConversation();
-
-  useEffect(() => {
-    const handleTyping = (value) => {
-      if (value) {
-        setIsTyping(value);
-        setTimeout(() => setIsTyping(""), 3000);
-      }
-    };
-
-    socket?.on("typing", handleTyping);
-
-    return () => {
-      socket?.off("typing", handleTyping);
-    };
-  }, [socket, setIsTyping]);
+  const { selectedConversation } = useConversation();
 
   const handleChange = () => {
     if (message.current.value) {
