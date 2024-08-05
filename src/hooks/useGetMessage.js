@@ -54,7 +54,7 @@ export const useGetMessage = () => {
     if (selectedConversation?._id) geNewtMessage();
 
     // geNewtMessage();
-  }, [selectedConversation?._id, setMessages]);
+  }, [selectedConversation?._id]);
 
   return { messages, loading, error };
 };
