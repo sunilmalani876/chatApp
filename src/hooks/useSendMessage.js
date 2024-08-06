@@ -1,4 +1,5 @@
 import { useAuthContext } from "@/context/useAuthContext";
+import { handleHTTPError } from "@/lib/utils";
 import useConversation from "@/store/useConversation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -22,11 +23,21 @@ export const useSendMessage = () => {
           body: JSON.stringify({ message }),
         }
       );
+
       const data = await res.json();
 
-      // console.log("send message", data.data);
-      setMessages([...messages, data.data]);
-      console.log("message", messages);
+      if (!res.ok) {
+        handleHTTPError(res.status, data.data.message);
+        return;
+      }
+
+      console.log("send message", data);
+      if (data.success) {
+        setMessages([...messages, data.data]);
+        console.log("message", messages);
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
