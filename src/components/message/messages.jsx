@@ -76,30 +76,19 @@ export const Message = ({ message }) => {
           {loading ? (
             "Deleting..."
           ) : (
-            <p className="flex flex-col break-all">
-              {message.message}
-              {fromMe && (
-                <BsCheck2All
-                  className={`w-4 h-4 ${
-                    message?.isSeen
-                      ? "text-sky-400 stroke-[0.5px]"
-                      : "text-white stroke-[0.5px]"
-                  } ${fromMe ? "self-end" : "self-start"}`}
-                />
-              )}
-            </p>
+            <p className="flex flex-col break-all">{message.message}</p>
           )}
           <span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="focus-visible:ring-0">
                 {fromMe && (
-                  <Button
-                    variant="ghost"
-                    className="hover:bg-transparent focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 hover:text-white"
-                    size="icon"
-                  >
-                    <DotsVerticalIcon className="w-4 h-4" />
-                  </Button>
+                  // <Button
+                  //   variant="ghost"
+                  //   className="hover:bg-transparent focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0 hover:text-white"
+                  //   size="sm"
+                  // >
+                  <DotsVerticalIcon className="w-3.5 h-3.5 ml-1.5" />
+                  // </Button>
                 )}
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -126,11 +115,21 @@ export const Message = ({ message }) => {
             </DropdownMenu>
           </span>
         </div>
+
         <p
-          className={`text-[10px] text-end ${
+          className={`text-[10px] text-end flex gap-1 items-center ${
             fromMe ? "self-end" : "self-start"
           }`}
         >
+          {fromMe && (
+            <BsCheck2All
+              className={`w-4 h-4 ${
+                message?.isSeen
+                  ? "text-sky-400 stroke-[0.5px]"
+                  : "text-white stroke-[0.5px]"
+              } ${fromMe ? "self-end" : "self-start"}`}
+            />
+          )}{" "}
           {getTimestamp(message?.createdAt)}{" "}
           {message?.createdAt !== message?.updatedAt ? "edited" : ""}
         </p>

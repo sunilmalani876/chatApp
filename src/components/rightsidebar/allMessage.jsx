@@ -50,7 +50,7 @@ const AllMessage = () => {
           <div
             key={index}
             ref={lastMessageRef}
-            className="w-full flex flex-col"
+            className="w-full flex flex-col px-1"
           >
             <Message message={item} />
           </div>
@@ -69,9 +69,19 @@ const AllMessage = () => {
 
 export default AllMessage;
 
-//      /\
-//     /  \
-//    /    \
-//   /      \
-//  /        \
-// /          \
+//                        /\
+//                       /  \
+//                      /    \
+//                     /      \
+//                    /        \
+//                   /          \
+//                  /            \
+//                 /              \
+//                /                \
+//               /                  \
+//              /                    \
+//             /                      \
+//            /                        \
+//           /                          \
+//          /                            \
+//         /                              \
