@@ -80,7 +80,7 @@ const Conversation = ({ user, emoji, avatar, setOpen = () => {} }) => {
       >
         <div className="avatar online">
           <div className="w-12 rounded-full relative">
-            {isOnline && (
+            {!BlockedByOther && isOnline && (
               <div className="bg-green-500 w-[11px] h-[11px] absolute top-1 right-0 rounded-full" />
             )}
             <img
